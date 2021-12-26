@@ -22,6 +22,13 @@ api = Cov19API(
 
 if __name__ == "__main__":
 
+    # Get the COVID dataframe from UK
     df = api.get_dataframe()
 
-    print(df.head())
+    # Extract data for every nation
+    # print(df['areaName'].unique())
+    dfEngland = df[df['areaName'].str.contains('England')]
+    dfNorthernIreland = df[df['areaName'].str.contains('NorthernIreland')]
+    dfWales = df[df['areaName'].str.contains('Wales')]
+    dfScotland = df[df['areaName'].str.contains('Scotland')]
+
