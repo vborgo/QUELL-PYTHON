@@ -28,8 +28,22 @@ if __name__ == "__main__":
 
     # Extract data for every nation
     # print(df['areaName'].unique())
-    dfEngland = df[df['areaName'].str.contains('England')]
-    dfNorthernIreland = df[df['areaName'].str.contains('NorthernIreland')]
-    dfWales = df[df['areaName'].str.contains('Wales')]
-    dfScotland = df[df['areaName'].str.contains('Scotland')]
+    # England
+    dfEngland = df[df['areaName'].str.contains('England')][['date','newCases']]
+    dfEngland = dfEngland.rename(columns={"newCases": "newCasesEngland"})
+    # Northern Ireland
+    dfNorthernIreland = df[df['areaName'].str.contains('Northern Ireland')][['date','newCases']]
+    dfNorthernIreland = dfNorthernIreland.rename(columns={"newCases": "newCasesNorthernIreland"})
+    # Wales
+    dfWales = df[df['areaName'].str.contains('Wales')][['date','newCases']]
+    dfWales = dfWales.rename(columns={"newCases": "DeathsWales"})
+    # Scotland
+    dfScotland = df[df['areaName'].str.contains('Scotland')][['date','newCases']]
+    dfScotland = dfScotland.rename(columns={"newCases": "newCasesScotland"})
 
+    # Create dataframe for merging data and for summing latter
+    dfUK = pd.merge(dfEngland, dfNorthernIreland, how='outer', on='date')
+    dfUK = pd.merge(dfUK, dfWales, how='outer', on='date')
+    dfUK = pd.merge(dfUK, dfScotland, how='outer', on='date')
+
+    print('Script Finished')
