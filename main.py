@@ -1,3 +1,4 @@
+import pandas as pd
 from uk_covid19 import Cov19API
 
 all_nations = [
@@ -8,10 +9,10 @@ cases_and_deaths = {
     "date": "date",
     "areaName": "areaName",
     "areaCode": "areaCode",
-    "newCasesByPublishDate": "newCasesByPublishDate",
-    "cumCasesByPublishDate": "cumCasesByPublishDate",
-    "newDeaths28DaysByDeathDate": "newDeaths28DaysByDeathDate",
-    "cumDeaths28DaysByDeathDate": "cumDeaths28DaysByDeathDate"
+    "newCases": "newCasesByPublishDate",
+    "cumCases": "cumCasesByPublishDate",
+    "newDeaths": "newDeaths28DaysByDeathDate",
+    "cumDeaths": "cumDeaths28DaysByDeathDate"
 }
 
 api = Cov19API(
