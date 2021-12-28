@@ -42,20 +42,23 @@ def getUKDataFrameBy(columnName = 'newCases'):
         #Merge the nation dataframe into the main one
         dfUK = dfUK.merge(df1, on=['date'], how='outer')
 
-    dfUK = dfUK.drop_duplicates(subset = 'date').reset_index(drop=True) #This duplicates rows when merge still need to be understood, drop_duplicates used to correct it
+    dfUK = dfUK.drop_duplicates(subset='date').reset_index(drop=True) #This duplicates rows when merge still need to be understood, drop_duplicates used to correct it
     dfUK[columnName + 'UK'] = dfUK.iloc[:, -4:].sum(axis=1)
 
-    return dfUK.iloc[::-1].reset_index(drop=True)
+    # Make it a time series
+    dfUK.index = pd.DatetimeIndex(dfUK['date'])
+
+    return dfUK.sort_index()
 
 if __name__ == "__main__":
 
     # Get the COVID dataframe from UK
     print('Getting UK data...')
-    dfUKNewCases = getUKDataFrameBy('newCases')
-    dfUKNewDeaths = getUKDataFrameBy('newDeaths')
+    dfUKNewCases = getUKDataFrameBy('newCases').last("6M")
+    dfUKNewDeaths = getUKDataFrameBy('newDeaths').last("6M")
 
     # Make the relation deaths over covid cases (to check how agressive it is)
-    dfDeathsOverCases = dfUKNewDeaths[['date', 'newDeathsUK']].merge(dfUKNewCases[['date', 'newCasesUK']], on=['date'], how='outer')
+    dfDeathsOverCases = dfUKNewDeaths[['newDeathsUK']].merge(dfUKNewCases[['newCasesUK']], on=['date'], how='outer')
     dfDeathsOverCases['newDeathsOvernewCases'] = dfDeathsOverCases[['newDeathsUK']].div(dfDeathsOverCases['newCasesUK'], axis=0)
 
     # Apply moving average to visualize the tendency
