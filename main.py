@@ -71,10 +71,18 @@ if __name__ == "__main__":
     dfDeathsOverCases.to_csv('csv/UKCovidNewDeathsOverNewCases.csv', index=False)
 
     # Plot
-    sns.lineplot(data=dfUKNewCases['newCasesUKMovAvrg' + str(movingAverageDays)])
-    #sns.lineplot(data=dfDeathsOverCases['newDeathsOvernewCases'])
+    #Plot the number of cases and save in png
+    plt.gcf().autofmt_xdate()
+    sns.lineplot(y='newCasesUKMovAvrg' + str(movingAverageDays), x='date', data=dfUKNewCases)
     if (os.path.isdir('plot') == False):
         os.mkdir("plot")
-    plt.savefig('plot/Graph.png')
+    plt.savefig('plot/UKnewCasesUKMovAvrg.png', dpi=1200)
+
+    # Plot the number of deaths over cases and save in png
+    plt.clf()
+    sns.lineplot(y='newDeathsOvernewCasesMovAvrg' + str(movingAverageDays), x='date', data=dfDeathsOverCases)
+    if (os.path.isdir('plot') == False):
+        os.mkdir("plot")
+    plt.savefig('plot/UKnewDeathsOvernewCasesMovAvrg.png', dpi=1200)
 
     print('Script Finished')
