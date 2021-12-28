@@ -1,10 +1,4 @@
-py -m pip install setuptools
-py -m pip install --upgrade pip
-py -m pip install virtualenv
-py -m pip install pyinstaller
-py -m pip install matplotlib
-py -m pip install pandas
-py -m pip install uk_covid19
+CALL _INSTALL_DEPENDANCIES.bat
 timeout /t 1
 pyinstaller --onefile "main.py"
 del main.spec
