@@ -50,6 +50,7 @@ def getUKDataFrameBy(columnName = 'newCases'):
 if __name__ == "__main__":
 
     # Get the COVID dataframe from UK
+    print('Getting UK data...')
     dfUKNewCases = getUKDataFrameBy('newCases')
     dfUKNewDeaths = getUKDataFrameBy('newDeaths')
 
@@ -64,6 +65,7 @@ if __name__ == "__main__":
     dfDeathsOverCases['newDeathsOvernewCasesMovAvrg'+ str(movingAverageDays)] = dfDeathsOverCases['newDeathsOvernewCases'].rolling(movingAverageDays).mean()
 
     # Export data in csv file
+    print('Exporting csvs into /csv folder...')
     if(os.path.isdir('csv') == False):
         os.mkdir("csv")
     dfUKNewCases.to_csv('csv/UKCovidNewCases.csv', index=False) #The best would be to add a timestamp to no overwrite older files
@@ -71,6 +73,7 @@ if __name__ == "__main__":
     dfDeathsOverCases.to_csv('csv/UKCovidNewDeathsOverNewCases.csv', index=False)
 
     # Plot
+    print('Ploting graphs and saving into /plot folder...')
     #Plot the number of cases and save in png
     plt.gcf().autofmt_xdate()
     sns.lineplot(y='newCasesUKMovAvrg' + str(movingAverageDays), x='date', data=dfUKNewCases)
