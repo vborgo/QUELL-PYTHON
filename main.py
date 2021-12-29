@@ -81,9 +81,9 @@ if __name__ == "__main__":
     print('Exporting csvs into /csv folder...')
     if(os.path.isdir('csv') == False):
         os.mkdir("csv")
-    dfUKNewCases.to_csv('csv/UKCovidNewCases.csv', index=False) #The best would be to add a timestamp to no overwrite older files
-    dfUKNewDeaths.to_csv('csv/UKCovidNewDeaths.csv.csv', index=False)
-    dfDeathsOverCases.to_csv('csv/UKCovidNewDeathsOverNewCases.csv', index=False)
+    dfUKNewCases.to_csv('csv/UKCovidNewCases.csv') #The best would be to add a timestamp to no overwrite older files
+    dfUKNewDeaths.to_csv('csv/UKCovidNewDeaths.csv.csv')
+    dfDeathsOverCases.to_csv('csv/UKCovidNewDeathsOverNewCases.csv')
 
     # Plot
     print('Ploting graphs and saving into /plot folder...')
