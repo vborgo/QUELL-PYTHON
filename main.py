@@ -50,6 +50,16 @@ def getUKDataFrameBy(columnName = 'newCases'):
 
     return dfUK.sort_index()
 
+def savePlot(df, columnName, show = True):
+    plt.clf()
+    sns.lineplot(y=columnName, x=df.index, data=df)
+    plt.gcf().autofmt_xdate()
+    if (os.path.isdir('plot') == False):
+        os.mkdir("plot")
+    plt.savefig('plot/' + columnName + '.png', dpi=1200)
+    if show == True:
+        plt.show()
+
 if __name__ == "__main__":
 
     # Get the COVID dataframe from UK
@@ -77,18 +87,9 @@ if __name__ == "__main__":
 
     # Plot
     print('Ploting graphs and saving into /plot folder...')
-    #Plot the number of cases and save in png
-    plt.gcf().autofmt_xdate()
-    sns.lineplot(y='newCasesUKMovAvrg' + str(movingAverageDays), x='date', data=dfUKNewCases)
-    if (os.path.isdir('plot') == False):
-        os.mkdir("plot")
-    plt.savefig('plot/UKnewCasesUKMovAvrg.png', dpi=1200)
-
+    #Plot the number of cases and save
+    savePlot(dfUKNewCases, 'newCasesUKMovAvrg' + str(movingAverageDays))
     # Plot the number of deaths over cases and save in png
-    plt.clf()
-    sns.lineplot(y='newDeathsOvernewCasesMovAvrg' + str(movingAverageDays), x='date', data=dfDeathsOverCases)
-    if (os.path.isdir('plot') == False):
-        os.mkdir("plot")
-    plt.savefig('plot/UKnewDeathsOvernewCasesMovAvrg.png', dpi=1200)
+    savePlot(dfDeathsOverCases, 'newDeathsOvernewCasesMovAvrg' + str(movingAverageDays))
 
     print('Script Finished')
